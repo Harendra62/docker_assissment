@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  web:
+    build: ./app
+    container_name: flask_web
+    ports:
+      - "5000:5000"
+    environment:
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
+
+  nginx:
+    build: ./nginx
+    container_name: nginx_static
+    ports:
+      - "8080:80"
